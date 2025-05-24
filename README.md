@@ -1,22 +1,44 @@
-# SUSCam 👀🎥
+# SUSCam 👁️🎥
 
-**SUSCam** ist ein praktisches Projekt zur Echtzeit-Personenerkennung mit Python, OpenCV und MediaPipe – inklusive WebSocket-gesteuerter Kamera.  
+**SUSCam** ist ein experimentelles Projekt zur Echtzeit-Personenerkennung und Kamerafernsteuerung mit Python, OpenCV und [MediaPipe](https://chuoling.github.io/mediapipe/) – entwickelt für den Workshop „Ich seh dich“ beim [ASM25](https://www.muc.ccc.de/asm:25:start) des Chaos Computer Club München.
 
-Ursprünglich entwickelt für den Workshop beim [ASM25](https://www.muc.ccc.de/asm:25:start), erlaubt es, schnell mit Kamerastreams zu experimentieren, Objekte zu erkennen und die Kamera zu bewegen. Es ist bewusst einfach gehalten und lädt zum Hacken und Weiterentwickeln ein.
+Ziel ist es, in kurzer Zeit einen funktionierenden Bildverarbeitungs-Workflow aufzubauen, mit dem Teilnehmer*innen visuelle Daten auswerten und gleichzeitig eine Kamera live per WebSocket steuern können. Die Anwendung ist bewusst offen gestaltet – zum Hacken, Erweitern und Infragestellen.
 
-> Sollte die externe Kamera nicht verfügbar sein, wird automatisch auf eine lokale Webcam umgeschaltet. Die Schnittstellen bleiben dabei gleich. Natürlich sind dann die Funktionen zur Motorkontrolle deaktiviert.
+> Sollte die externe Kamera nicht verfügbar sein, wird automatisch auf eine lokale Webcam umgeschaltet. Die Schnittstellen bleiben dabei gleich – allerdings sind dann motorisierte Funktionen deaktiviert.
 
 ## 🎯 Mediapipe
 
-[MediaPipe](https://chuoling.github.io/mediapipe/) ist eine Open-Source-Bibliothek von Google, die Echtzeit-Computer-Vision-Anwendungen ermöglicht. Sie bietet vorgefertigte Lösungen für Aufgaben wie Hand-, Gesichts- und Körpererkennung sowie Gestenerkennung.
+[MediaPipe](https://chuoling.github.io/mediapipe/) ist eine Open-Source-Bibliothek von Google für Echtzeit-Computer-Vision-Anwendungen. Sie bringt leistungsfähige Module wie Hand-, Gesichts- und Körpererkennung direkt in Python-Projekte – ohne tiefes Machine-Learning-Wissen.
 
-In diesem Projekt nutzen wir MediaPipe, um visuelle Merkmale wie Hände oder Gesichter im Kamerabild zu erkennen und zu verfolgen. Dies ermöglicht es, interaktive Anwendungen zu entwickeln, bei denen die Kamera beispielsweise automatisch auf erkannte Objekte reagieren kann.
+Im Rahmen dieses Projekts dient MediaPipe zur schnellen Visualisierung und Analyse von Kameradaten – ideal für interaktive Anwendungen wie „Person verfolgen“, „Hand zeigen = Kamera schwenkt“ oder eigene Ideen.
 
 **Weitere Ressourcen:**
 
-* Offizielle Python-Setup-Anleitung: [MediaPipe Python Setup Guide](https://ai.google.dev/edge/mediapipe/solutions/setup_python)
-* Gestenerkennung mit MediaPipe: [Gesture Recognition Guide](https://ai.google.dev/edge/mediapipe/solutions/vision/gesture_recognizer)
-* MediaPipe auf PyPI: [mediapipe](https://pypi.org/project/mediapipe/)
+* [Setup-Anleitung für Python](https://ai.google.dev/edge/mediapipe/solutions/setup_python)
+* [Gesture Recognition Guide](https://ai.google.dev/edge/mediapipe/solutions/vision/gesture_recognizer)
+* [MediaPipe auf PyPI](https://pypi.org/project/mediapipe/)
+
+---
+
+## 🕹️ Kamerafernsteuerung via WebSocket
+
+Die Kamera im Projekt kann live über einfache WebSocket-Kommandos gesteuert werden – etwa zur Positionierung, Frame-Abfrage oder Statusinfo.
+
+| Befehl                | Funktion                            |
+| --------------------- | ----------------------------------- |
+| `getframe`            | Aktuelles Kamerabild senden         |
+| `center`              | Kamera auf Startposition setzen     |
+| `up/down`             | Kamera vertikal bewegen             |
+| `left/right`          | Kamera horizontal bewegen           |
+| `get_pos`             | Gibt aktuelle Position als JSON     |
+| `get_limits`          | Gibt X/Y-Grenzen als JSON zurück    |
+| `client_count`        | Gibt Anzahl verbundener Clients     |
+| `{"x": 100, "y": 50}` | Direkte Positionssteuerung via JSON |
+| `light_on/off`        | (Derzeit deaktiviert) Lichtsteuerung|
+
+Das Steuerprotokoll ist einfach gehalten – ideal für eigene Steuerungs-Apps, UIs oder Automatisierungen. Die Details findest du in [`tools/cam.py`](tools/cam.py).
+
+---
 
 ## 📦 Projektstruktur
 
@@ -34,7 +56,7 @@ SUSCam/
     └── cam.py               # Kamera-Klasse für Steuerung & Streaming
 ````
 
----
+> Für Umgebungsvariablen gibt es eine `.env`-Datei (siehe `.env.example` für Vorlage).
 
 ## ▶️ Schnellstart
 
@@ -69,32 +91,15 @@ python examples/camera_stream_opencv.py
 | `camera_stream_mediapipe.py` | Erweitert um Handerkennung via MediaPipe.               |
 | `move_camera.py`             | Führt Bewegungsbefehle aus (links, rechts, usw.).       |
 
-Alle Skripte greifen automatisch auf die in `.env` konfigurierte Kamera zu.
-
-## 🌐 WebSocket-API
-
-Die Kamera kann über folgende Befehle gesteuert oder abgefragt werden:
-
-| Befehl                | Funktion                            |
-| --------------------- | ----------------------------------- |
-| `getframe`            | Aktuelles Kamerabild senden         |
-| `center`              | Kamera auf Startposition setzen     |
-| `up/down`             | Kamera vertikal bewegen             |
-| `left/right`          | Kamera horizontal bewegen           |
-| `get_pos`             | Gibt aktuelle Position als JSON     |
-| `get_limits`          | Gibt X/Y-Grenzen als JSON zurück    |
-| `client_count`        | Gibt Anzahl verbundener Clients     |
-| `{"x": 100, "y": 50}` | Direkte Positionssteuerung via JSON |
-
-*(`light_on` / `light_off` sind derzeit deaktiviert)*
+Alle Skripte nutzen automatisch die in `.env` konfigurierte IP-Adresse.
 
 ## 🔐 Hinweise
 
-* Alle Skripte sind als Lernmaterial gedacht.
-* Der Zugriff auf die Kamera erfolgt über ein einfaches WebSocket-Protokoll.
-* Achte bei eigenen Projekten auf Datenschutz und ethische Aspekte.
+* Dieses Projekt ist ein Lern- und Diskussionswerkzeug – kein fertiges Produkt.
+* Datenschutz und ethische Aspekte sollten bei eigenen Anwendungen aktiv mitgedacht werden.
+* Technische Störungen (Netzwerk, Kamera, Betriebssystem-Inkompatibilitäten) können vorkommen – es gibt Fallbacks.
 
-## 🙋 Kontakt & Mitmachen
+## 🙋 Mitmachen & Feedback
 
-Dieses Projekt entstand im Rahmen eines Workshops beim Chaos Computer Club München.
-Fragen oder Ideen? → Issues oder Pull Requests willkommen.
+SUSCam entstand im Rahmen des Workshops „Ich seh dich“ beim Chaos Computer Club München.
+Fragen, Ideen oder Erweiterungen? → Öffne ein [Issue](https://github.com/Friedjof/SUSCam/issues) oder sprich uns beim ASM25 direkt an.
