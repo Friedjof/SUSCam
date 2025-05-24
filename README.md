@@ -91,7 +91,7 @@ python examples/camera_stream_opencv.py
 | `camera_stream_mediapipe.py` | Erweitert um Handerkennung via MediaPipe.               |
 | `move_camera.py`             | Führt Bewegungsbefehle aus (links, rechts, usw.).       |
 
-Alle Skripte nutzen automatisch die in `.env` konfigurierte IP-Adresse.
+> Alle Skripte nutzen automatisch die in `.env` konfigurierte IP-Adresse.
 
 ## 🔐 Hinweise
 
@@ -102,4 +102,4 @@ Alle Skripte nutzen automatisch die in `.env` konfigurierte IP-Adresse.
 ## 🙋 Mitmachen & Feedback
 
 SUSCam entstand im Rahmen des Workshops „Ich seh dich“ beim Chaos Computer Club München.
-Fragen, Ideen oder Erweiterungen? → Öffne ein [Issue](https://github.com/Friedjof/SUSCam/issues) oder sprich uns beim ASM25 direkt an.
+Fragen, Ideen oder Erweiterungen? → Öffne ein [Issue](https://github.com/Friedjof/SUSCam/issues) oder sprich mich beim ASM25 direkt an.
