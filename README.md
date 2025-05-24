@@ -1,6 +1,6 @@
 # SUSCam 👁️🎥
 
-**SUSCam** ist ein experimentelles Projekt zur Echtzeit-Personenerkennung und Kamerafernsteuerung mit Python, OpenCV und [MediaPipe](https://chuoling.github.io/mediapipe/) – entwickelt für den Workshop „Ich seh dich“ beim [ASM25](https://www.muc.ccc.de/asm:25:start) des Chaos Computer Club München.
+**SUSCam** ist ein experimentelles Projekt zur Echtzeit-Personenerkennung und Kamerafernsteuerung mit Python, OpenCV und [MediaPipe](https://chuoling.github.io/mediapipe/) – entwickelt für den Workshop „SUSCam“ beim [ASM25](https://www.muc.ccc.de/asm:25:start) des Chaos Computer Club München.
 
 Ziel ist es, in kurzer Zeit einen funktionierenden Bildverarbeitungs-Workflow aufzubauen, mit dem Teilnehmer*innen visuelle Daten auswerten und gleichzeitig eine Kamera live per WebSocket steuern können. Die Anwendung ist bewusst offen gestaltet – zum Hacken, Erweitern und Infragestellen.
 
@@ -101,5 +101,5 @@ python examples/camera_stream_opencv.py
 
 ## 🙋 Mitmachen & Feedback
 
-SUSCam entstand im Rahmen des Workshops „Ich seh dich“ beim Chaos Computer Club München.
+Dieses Projekt entstand im Rahmen des Workshops „SUSCam“ beim ASM25.
 Fragen, Ideen oder Erweiterungen? → Öffne ein [Issue](https://github.com/Friedjof/SUSCam/issues) oder sprich mich beim ASM25 direkt an.
