@@ -31,7 +31,7 @@ SUSCam/
 │   ├── camera_stream_opencv.py
 │   └── move_camera.py
 └── tools/
-    ├── cam.py               # Kamera-Klasse für Steuerung & Streaming
+    └── cam.py               # Kamera-Klasse für Steuerung & Streaming
 ````
 
 ---
