@@ -31,11 +31,11 @@ mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 
 # Callback-Funktion für empfangene Nachrichten von der Kamera
-def my_msg_callback(msg):
+def my_msg_callback(msg: str, cam: Camera):
     print("Neue Nachricht:", msg)
 
 # Callback-Funktion für empfangene Bilder von der Kamera
-def my_img_callback(img):
+def my_img_callback(img: Image.Image, cam: Camera):
     # Bild von PIL.Image zu NumPy-Array konvertieren
     img_np = np.array(img)
     # Farbkanäle von RGB (PIL) zu BGR (OpenCV) umwandeln
@@ -49,7 +49,7 @@ def my_img_callback(img):
         min_detection_confidence=0.5     # Mindest-Konfidenz für Erkennung
     ) as hands:
         # Bild für MediaPipe von BGR zurück zu RGB konvertieren
-        results = hands.process(cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB))
+        results = hands.process(img_np)
         # Wenn mindestens eine Hand erkannt wurde
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
@@ -59,7 +59,7 @@ def my_img_callback(img):
                 )
 
     # Zeigt das aktuelle Bild mit erkannten Händen im Fenster an
-    cv2.imshow("Kamera-Stream mit MediaPipe", img_bgr)
+    cv2.imshow("Kamera-Stream mit MediaPipe", img_np)
     # Wartet kurz auf Tastendruck, damit das Fenster aktualisiert wird
     key = cv2.waitKey(1)
     # Wenn die Taste 'q' gedrückt wird, Fenster schließen und Programm beenden

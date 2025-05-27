@@ -28,11 +28,11 @@ from tools.cam import Camera
 load_dotenv()  # Lädt Umgebungsvariablen aus einer .env-Datei
 
 # Wird aufgerufen, wenn eine Nachricht von der Kamera kommt
-def my_msg_callback(msg):
+def my_msg_callback(msg: str, cam: Camera):
     print("Neue Nachricht:", msg)
 
 # Wird aufgerufen, wenn ein neues Bild von der Kamera kommt
-def my_img_callback(img):
+def my_img_callback(img: Image.Image, cam: Camera):
     img_cv = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)  # Bild für OpenCV umwandeln
     cv2.imshow("Kamera-Stream", img_cv)                      # Bild anzeigen
     key = cv2.waitKey(1)                                     # Auf Tastendruck warten

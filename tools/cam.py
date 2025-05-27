@@ -100,17 +100,17 @@ class Camera:
             if self.img_callback:
                 try:
                     img = Image.open(io.BytesIO(message))
-                    self.img_callback(img)
+                    self.img_callback(img, cam=self)
                 except Exception as e:
                     print("Fehler beim Laden des Bildes:", e)
         else:
             try:
                 data = json.loads(message)
                 if self.msg_callback:
-                    self.msg_callback(data)
+                    self.msg_callback(data, cam=self)
             except Exception:
                 if self.msg_callback:
-                    self.msg_callback(message)
+                    self.msg_callback(message, cam=self)
 
     async def listen(self):
         """
@@ -124,15 +124,21 @@ class Camera:
                     ret, frame = self.cap.read()
                     if ret:
                         img = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-                        self.img_callback(img)
+                        self.img_callback(img, cam=self)
                     await asyncio.sleep(0.05)  # ca. 20 FPS
             else:
                 while True:
                     await asyncio.sleep(1)
             return
         while True:
-            msg = await self.recv()
-            self._on_message(msg)
+            try:
+                msg = await self.recv()
+                self._on_message(msg)
+            except Exception as e:
+                print("Fehler beim Empfang von Nachrichten:", e)
+                print("Programm wird beendet.")
+                import sys
+                sys.exit(1)
 
     def loop(self):
         """
@@ -233,6 +239,7 @@ class Camera:
             self._y = START_POS_Y
             print(f"[Fallback] center: x={self._x}, y={self._y}")
             return
+        print("Zentrierungsbefehl gesendet.")
         await self.send("center")
 
     async def up(self):
@@ -244,6 +251,7 @@ class Camera:
                 self._y = max(MIN_POS_Y, self._y - 1)
             print(f"[Fallback] up: x={self._x}, y={self._y}")
             return
+        print("Aufwärtsbefehl gesendet.")
         await self.send("up")
 
     async def down(self):
@@ -255,6 +263,7 @@ class Camera:
                 self._y = min(MAX_POS_Y, self._y + 1)
             print(f"[Fallback] down: x={self._x}, y={self._y}")
             return
+        print("Abwärtsbefehl gesendet.")
         await self.send("down")
 
     async def left(self):
@@ -266,6 +275,7 @@ class Camera:
                 self._x = max(MIN_POS_X, self._x - 1)
             print(f"[Fallback] left: x={self._x}, y={self._y}")
             return
+        print("Linksbefehl gesendet.")
         await self.send("left")
 
     async def right(self):
@@ -277,6 +287,7 @@ class Camera:
                 self._x = min(MAX_POS_X, self._x + 1)
             print(f"[Fallback] right: x={self._x}, y={self._y}")
             return
+        print("Rechtsbefehl gesendet.")
         await self.send("right")
 
     async def get_pos(self):
