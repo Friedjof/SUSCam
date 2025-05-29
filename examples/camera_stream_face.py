@@ -102,7 +102,6 @@ def my_img_callback(img: Image.Image, cam: Camera):
                 # Statusmeldung im Bild anzeigen und in Konsole ausgeben
                 cv2.putText(img_bgr, "Gesicht erkannt", (50, 50),
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-                print("Gesicht erkannt!")
         else:
             # Statusmeldung wenn kein Gesicht erkannt wurde
             cv2.putText(img_bgr, "Kein Gesicht erkannt", (50, 50),
