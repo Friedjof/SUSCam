@@ -31,8 +31,10 @@ def my_msg_callback(msg: str, cam: Camera):
 def my_img_callback(img: Image.Image, cam: Camera):
     # Bild von PIL.Image zu NumPy-Array konvertieren und Farbkanäle anpassen
     img_cv = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+
     # Bild im Fenster anzeigen
     cv2.imshow("Kamera-Stream", img_cv)
+
     # Auf Tastendruck warten, Fenster bei 'q' schließen
     key = cv2.waitKey(1)
     if key & 0xFF == ord('q'):
