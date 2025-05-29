@@ -93,6 +93,24 @@ python examples/camera_stream_opencv.py
 
 > Alle Skripte nutzen automatisch die in `.env` konfigurierte IP-Adresse.
 
+## 📷 Bonus: Virtuelle Kamera
+
+Mit [pyvirtualcam](https://pypi.org/project/pyvirtualcam/) kann der Kamerastream als virtuelle Webcam bereitgestellt werden. So können andere Anwendungen (z.B. Videokonferenz-Tools) den Live-Stream nutzen.
+
+### Ubuntu
+
+```bash
+sudo apt install v4l2loopback-dkms
+sudo modprobe v4l2loopback devices=1 video_nr=10 card_label="SUSCam Virtual Camera" exclusive_caps=1
+pip install pyvirtualcam
+```
+
+### Windows
+
+```bash
+pip install pyvirtualcam
+```
+
 ## 🔐 Hinweise
 
 * Dieses Projekt ist ein Lern- und Diskussionswerkzeug – kein fertiges Produkt.
