@@ -117,6 +117,9 @@ pip install pyvirtualcam
 * Datenschutz und ethische Aspekte sollten bei eigenen Anwendungen aktiv mitgedacht werden.
 * Technische Störungen (Netzwerk, Kamera, Betriebssystem-Inkompatibilitäten) können vorkommen – es gibt Fallbacks.
 
+## 📝 Lizenz
+Dieses Projekt steht unter der [MIT-Lizenz](LICENSE). Du kannst es frei nutzen, modifizieren und weiterverbreiten.
+
 ## 🙋 Mitmachen & Feedback
 
 Dieses Projekt entstand im Rahmen des Workshops „SUSCam“ beim ASM25.
