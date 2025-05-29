@@ -24,11 +24,11 @@ from tools.cam import Camera
 load_dotenv()  # Lädt Umgebungsvariablen aus einer .env-Datei
 
 # Callback-Funktion für empfangene Nachrichten von der Kamera
-def my_msg_callback(msg):
+def my_msg_callback(msg: str, cam: Camera):
     print("Neue Nachricht:", msg)
 
 # Callback-Funktion für empfangene Bilder von der Kamera
-def my_img_callback(img):
+def my_img_callback(img: Image.Image, cam: Camera):
     # Bild von PIL.Image zu NumPy-Array konvertieren und Farbkanäle anpassen
     img_cv = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
     # Bild im Fenster anzeigen
