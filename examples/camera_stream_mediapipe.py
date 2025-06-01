@@ -59,7 +59,7 @@ def my_img_callback(img: Image.Image, cam: Camera):
                 )
 
     # Zeigt das aktuelle Bild mit erkannten Händen im Fenster an
-    cv2.imshow("Kamera-Stream mit MediaPipe", img_np)
+    cv2.imshow("Kamera-Stream mit MediaPipe", img_bgr)
     # Wartet kurz auf Tastendruck, damit das Fenster aktualisiert wird
     key = cv2.waitKey(1)
     # Wenn die Taste 'q' gedrückt wird, Fenster schließen und Programm beenden
